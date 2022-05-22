@@ -2,9 +2,9 @@
 
 namespace AniketIN\Wallet\Tests;
 
+use AniketIN\Wallet\WalletServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use AniketIN\Wallet\WalletServiceProvider;
 
 class TestCase extends Orchestra
 {

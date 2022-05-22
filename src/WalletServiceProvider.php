@@ -2,9 +2,9 @@
 
 namespace AniketIN\Wallet;
 
+use AniketIN\Wallet\Commands\WalletCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use AniketIN\Wallet\Commands\WalletCommand;
 
 class WalletServiceProvider extends PackageServiceProvider
 {

@@ -47,4 +47,26 @@ class Wallet extends Model
             ]);
         });
     }
+
+    public function withdraw(int $amount, string $description)
+    {
+        if ($amount < 1) {
+            throw new Exception("Withdrawl amount must not be less than 1, $amount given.");
+        }
+
+        DB::transaction(function () use ($amount, $description) {
+            $wallet = $this->lockForUpdate()->find($this->id);
+
+            $transaction['ob'] = $wallet->balance;
+
+            $wallet->decrement('balance', $amount);
+
+            $wallet->transactions()->create([
+                ...$transaction,
+                'type' => 'debit',
+                'cb' => $wallet->balance,
+                'description' => $description,
+            ]);
+        });
+    }
 }

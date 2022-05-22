@@ -9,6 +9,13 @@ class WalletTransaction extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'ob',
+        'cb',
+        'description',
+        'type',
+    ];
+
     public function wallet()
     {
         return $this->belongsTo(Wallet::class);

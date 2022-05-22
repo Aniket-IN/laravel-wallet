@@ -12,6 +12,7 @@ return new class extends Migration
         Schema::create('wallet_transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Wallet::class);
+            $table->enum('type', ['credit', 'debit']);
             $table->decimal('ob', 10, 2);
             $table->decimal('cb', 10, 2);
             $table->text('description');

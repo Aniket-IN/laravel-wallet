@@ -2,11 +2,10 @@
 
 namespace AniketIN\Wallet\Models;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
-use AniketIN\Wallet\Models\WalletTransaction;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Wallet extends Model
 {
@@ -23,7 +22,7 @@ class Wallet extends Model
     }
 
     public function transactions()
-    {   
+    {
         return $this->hasMany(WalletTransaction::class);
     }
 
@@ -35,7 +34,7 @@ class Wallet extends Model
 
         DB::transaction(function () use ($amount, $description) {
             $wallet = $this->lockForUpdate()->find($this->id);
-            
+
             $transaction['ob'] = $wallet->balance;
 
             $wallet->increment('balance', $amount);

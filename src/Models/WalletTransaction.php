@@ -2,9 +2,8 @@
 
 namespace AniketIN\Wallet\Models;
 
-use AniketIN\Wallet\Models\Wallet;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class WalletTransaction extends Model
 {

@@ -1,0 +1,21 @@
+<?php
+
+use AniketIN\Wallet\Models\Wallet;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::create('wallet_transactions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Wallet::class);
+            $table->decimal('ob', 10, 2);
+            $table->decimal('cb', 10, 2);
+            $table->text('description');
+            $table->timestamps();
+        });
+    }
+};

@@ -8,11 +8,12 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('laravel_wallet_table', function (Blueprint $table) {
+        Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-
-            // add fields
-
+            $table->bigInteger('walletable_id');
+            $table->string('walletable_type');
+            $table->decimal('balance', 10, 2);
+            $table->decimal('withdrawable_balance', 10, 2)->default(0);
             $table->timestamps();
         });
     }

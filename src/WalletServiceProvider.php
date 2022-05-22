@@ -19,7 +19,7 @@ class WalletServiceProvider extends PackageServiceProvider
             ->name('laravel-wallet')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_laravel-wallet_table')
+            ->hasMigrations(['create_wallets_table', 'create_wallet_transactions_table'])
             ->hasCommand(WalletCommand::class);
     }
 }

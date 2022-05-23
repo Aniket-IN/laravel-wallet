@@ -33,11 +33,13 @@ class Wallet extends Model
         }
 
         return DB::transaction(function () use ($amount, $description) {
-            $this->refresh()->lockForUpdate()->find($this->id);
+            $wallet = $this->lockForUpdate()->find($this->id);
 
-            $transaction['ob'] = $this->balance;
-
-            $this->increment('balance', $amount);
+            $transaction['ob'] = $wallet->balance;
+            
+            $this->update([
+                'balance' => $wallet->balance + $amount
+            ]);
             
             return $this->transactions()->create([
                 ...$transaction,
@@ -56,11 +58,13 @@ class Wallet extends Model
 
 
         return DB::transaction(function () use ($amount, $description) {
-            $this->refresh()->lockForUpdate()->find($this->id);
+            $wallet = $this->lockForUpdate()->find($this->id);
 
-            $transaction['ob'] = $this->balance;
-
-            $this->decrement('balance', $amount);
+            $transaction['ob'] = $wallet->balance;
+            
+            $this->update([
+                'balance' => $wallet->balance - $amount
+            ]);
             
             return $this->transactions()->create([
                 ...$transaction,
@@ -69,5 +73,6 @@ class Wallet extends Model
                 'description' => $description,
             ]);
         });
+
     }
 }

@@ -16,6 +16,10 @@ class Wallet extends Model
         'withdrawable_balance',
     ];
 
+    protected $casts = [
+        'balance' => 'float'
+    ];
+
     public function walletable()
     {
         return $this->morphTo();
@@ -52,11 +56,9 @@ class Wallet extends Model
 
     public function withdraw(int $amount, string $description, bool $force = false)
     {
-        
         if ($amount < 1) {
             throw new Exception("Withdrawl amount must not be less than 1, $amount given.");
         }
-
 
         return DB::transaction(function () use ($amount, $description, $force) {
             $wallet = $this->lockForUpdate()->find($this->id);
@@ -67,8 +69,13 @@ class Wallet extends Model
                 throw new Exception("To withdraw more than wallet balance you need to use force mode.");
             }
 
+            if ($wallet->withdrawable_balance < $amount) {
+                throw new Exception("Withdrawable balance exceeds! Max withdrawable limit is set to {$wallet->withdrawable_balance}.");
+            }
+
             $this->update([
                 'balance' => $wallet->balance - $amount,
+                'withdrawable_balance' => $wallet->withdrawable_balance - $amount,
             ]);
 
             return $this->transactions()->create([

@@ -17,7 +17,7 @@ class Wallet extends Model
     ];
 
     protected $casts = [
-        'balance' => 'float'
+        'balance' => 'float',
     ];
 
     public function walletable()

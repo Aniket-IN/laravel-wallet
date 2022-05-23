@@ -9,7 +9,7 @@ trait HasWallet
     public function wallet()
     {
         return $this->morphOne(Wallet::class, 'walletable')->withDefault(function ($wallet, $user) {
-            $user->wallet()->firstOrCreate([
+            return $user->wallet()->firstOrCreate([
                 'balance' => 0,
             ]);
         });

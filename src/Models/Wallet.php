@@ -34,7 +34,7 @@ class Wallet extends Model
 
         return DB::transaction(function () use ($amount, $description) {
             $wallet = $this->lockForUpdate()->find($this->id);
-
+           
             $transaction['ob'] = $wallet->balance;
 
             $this->update([
@@ -50,17 +50,22 @@ class Wallet extends Model
         });
     }
 
-    public function withdraw(int $amount, string $description)
+    public function withdraw(int $amount, string $description, bool $force = false)
     {
+        
         if ($amount < 1) {
             throw new Exception("Withdrawl amount must not be less than 1, $amount given.");
         }
 
 
-        return DB::transaction(function () use ($amount, $description) {
+        return DB::transaction(function () use ($amount, $description, $force) {
             $wallet = $this->lockForUpdate()->find($this->id);
 
             $transaction['ob'] = $wallet->balance;
+
+            if ($wallet->balance < $amount && !$force) {
+                throw new Exception("To withdraw more than wallet balance you need to use force mode.");
+            }
 
             $this->update([
                 'balance' => $wallet->balance - $amount,

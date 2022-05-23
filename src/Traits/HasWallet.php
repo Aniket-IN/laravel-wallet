@@ -11,6 +11,7 @@ trait HasWallet
         return $this->morphOne(Wallet::class, 'walletable')->withDefault(function ($wallet, $user) {
             return $user->wallet()->firstOrCreate([
                 'balance' => 0,
+                'withdrawable_balance' => 0,
             ]);
         });
     }

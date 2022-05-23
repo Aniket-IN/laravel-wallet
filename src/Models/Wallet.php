@@ -32,17 +32,17 @@ class Wallet extends Model
             throw new Exception("Deposit amount must not be less than 1, $amount given.");
         }
 
-        DB::transaction(function () use ($amount, $description) {
-            $wallet = $this->lockForUpdate()->find($this->id);
+        return DB::transaction(function () use ($amount, $description) {
+            $this->refresh()->lockForUpdate()->find($this->id);
 
-            $transaction['ob'] = $wallet->balance;
+            $transaction['ob'] = $this->balance;
 
-            $wallet->increment('balance', $amount);
-
-            $wallet->transactions()->create([
+            $this->increment('balance', $amount);
+            
+            return $this->transactions()->create([
                 ...$transaction,
                 'type' => 'credit',
-                'cb' => $wallet->balance,
+                'cb' => $this->balance,
                 'description' => $description,
             ]);
         });
@@ -54,17 +54,18 @@ class Wallet extends Model
             throw new Exception("Withdrawl amount must not be less than 1, $amount given.");
         }
 
-        DB::transaction(function () use ($amount, $description) {
-            $wallet = $this->lockForUpdate()->find($this->id);
 
-            $transaction['ob'] = $wallet->balance;
+        return DB::transaction(function () use ($amount, $description) {
+            $this->refresh()->lockForUpdate()->find($this->id);
 
-            $wallet->decrement('balance', $amount);
+            $transaction['ob'] = $this->balance;
 
-            $wallet->transactions()->create([
+            $this->decrement('balance', $amount);
+            
+            return $this->transactions()->create([
                 ...$transaction,
                 'type' => 'debit',
-                'cb' => $wallet->balance,
+                'cb' => $this->balance,
                 'description' => $description,
             ]);
         });

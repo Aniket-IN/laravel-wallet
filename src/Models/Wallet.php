@@ -36,11 +36,11 @@ class Wallet extends Model
             $wallet = $this->lockForUpdate()->find($this->id);
 
             $transaction['ob'] = $wallet->balance;
-            
+
             $this->update([
-                'balance' => $wallet->balance + $amount
+                'balance' => $wallet->balance + $amount,
             ]);
-            
+
             return $this->transactions()->create([
                 ...$transaction,
                 'type' => 'credit',
@@ -61,11 +61,11 @@ class Wallet extends Model
             $wallet = $this->lockForUpdate()->find($this->id);
 
             $transaction['ob'] = $wallet->balance;
-            
+
             $this->update([
-                'balance' => $wallet->balance - $amount
+                'balance' => $wallet->balance - $amount,
             ]);
-            
+
             return $this->transactions()->create([
                 ...$transaction,
                 'type' => 'debit',
@@ -73,6 +73,5 @@ class Wallet extends Model
                 'description' => $description,
             ]);
         });
-
     }
 }

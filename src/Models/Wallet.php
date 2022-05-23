@@ -38,7 +38,7 @@ class Wallet extends Model
             $transaction['ob'] = $this->balance;
 
             $this->increment('balance', $amount);
-            
+
             return $this->transactions()->create([
                 ...$transaction,
                 'type' => 'credit',
@@ -61,7 +61,7 @@ class Wallet extends Model
             $transaction['ob'] = $this->balance;
 
             $this->decrement('balance', $amount);
-            
+
             return $this->transactions()->create([
                 ...$transaction,
                 'type' => 'debit',

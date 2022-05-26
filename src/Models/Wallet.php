@@ -49,6 +49,7 @@ class Wallet extends Model
             return $this->transactions()->create([
                 ...$transaction,
                 'type' => 'credit',
+                'amount' => $amount,
                 'cb' => $this->balance,
                 'description' => $description,
             ]);
@@ -82,6 +83,7 @@ class Wallet extends Model
             return $this->transactions()->create([
                 ...$transaction,
                 'type' => 'debit',
+                'amount' => $amount,
                 'cb' => $this->balance,
                 'description' => $description,
             ]);

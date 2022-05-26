@@ -10,6 +10,7 @@ class WalletTransaction extends Model
     use HasFactory;
 
     protected $fillable = [
+        'amount',
         'ob',
         'cb',
         'description',
@@ -19,6 +20,7 @@ class WalletTransaction extends Model
     protected $casts = [
         'ob' => 'float',
         'cb' => 'float',
+        'amount' => 'float',
     ];
 
     public function wallet()

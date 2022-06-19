@@ -67,11 +67,11 @@ class Wallet extends Model
 
             $transaction['ob'] = $wallet->balance;
 
-            if ($wallet->balance < $amount && !$force) {
+            if ($wallet->balance < $amount && ! $force) {
                 throw new Exception("To withdraw more than wallet balance you need to use force mode.");
             }
 
-            if ($wallet->withdrawable_balance < $amount && !$bypass_withdrawable_limit) {
+            if ($wallet->withdrawable_balance < $amount && ! $bypass_withdrawable_limit) {
                 throw new Exception("Withdrawable balance exceeds! Max withdrawable limit is set to {$wallet->withdrawable_balance}.");
             }
 

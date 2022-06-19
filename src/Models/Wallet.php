@@ -56,28 +56,28 @@ class Wallet extends Model
         });
     }
 
-    public function withdraw(int $amount, string $description, bool $force = false)
+    public function withdraw(int $amount, string $description, bool $force = false, $bypass_withdrawable_limit = false)
     {
         if ($amount < 1) {
             throw new Exception("Withdrawl amount must not be less than 1, $amount given.");
         }
 
-        return DB::transaction(function () use ($amount, $description, $force) {
+        return DB::transaction(function () use ($amount, $description, $force, $bypass_withdrawable_limit) {
             $wallet = $this->lockForUpdate()->find($this->id);
 
             $transaction['ob'] = $wallet->balance;
 
-            if ($wallet->balance < $amount && ! $force) {
+            if ($wallet->balance < $amount && !$force) {
                 throw new Exception("To withdraw more than wallet balance you need to use force mode.");
             }
 
-            if ($wallet->withdrawable_balance < $amount) {
+            if ($wallet->withdrawable_balance < $amount && !$bypass_withdrawable_limit) {
                 throw new Exception("Withdrawable balance exceeds! Max withdrawable limit is set to {$wallet->withdrawable_balance}.");
             }
 
             $this->update([
                 'balance' => $wallet->balance - $amount,
-                'withdrawable_balance' => $wallet->withdrawable_balance - $amount,
+                'withdrawable_balance' => $bypass_withdrawable_limit ? $wallet->withdrawable_balance : $wallet->withdrawable_balance - $amount,
             ]);
 
             return $this->transactions()->create([

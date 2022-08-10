@@ -17,12 +17,6 @@ class WalletTransaction extends Model
         'type',
     ];
 
-    protected $casts = [
-        'ob' => 'float',
-        'cb' => 'float',
-        'amount' => 'float',
-    ];
-
     public function wallet()
     {
         return $this->belongsTo(Wallet::class);

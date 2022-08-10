@@ -16,11 +16,6 @@ class Wallet extends Model
         'withdrawable_balance',
     ];
 
-    protected $casts = [
-        'balance' => 'float',
-        'withdrawable_balance' => 'float',
-    ];
-
     public function walletable()
     {
         return $this->morphTo();

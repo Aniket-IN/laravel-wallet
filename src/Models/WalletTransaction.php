@@ -2,9 +2,9 @@
 
 namespace AniketIN\Wallet\Models;
 
+use AniketIN\Wallet\Round;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use AniketIN\Wallet\Round;
 
 class WalletTransaction extends Model
 {

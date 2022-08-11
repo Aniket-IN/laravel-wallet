@@ -13,7 +13,6 @@ class Round implements CastsAttributes
      */
     protected $decimal;
 
-
     /**
      * Create a new cast class instance.
      *

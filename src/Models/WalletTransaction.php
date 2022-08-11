@@ -2,10 +2,10 @@
 
 namespace AniketIN\Wallet\Models;
 
+use AniketIN\Wallet\Casts\Round;
 use AniketIN\Wallet\Round;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use AniketIN\Wallet\Casts\Round;
 
 class WalletTransaction extends Model
 {

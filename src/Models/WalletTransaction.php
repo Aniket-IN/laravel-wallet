@@ -4,6 +4,7 @@ namespace AniketIN\Wallet\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use AniketIN\Wallet\Round;
 
 class WalletTransaction extends Model
 {
@@ -15,6 +16,12 @@ class WalletTransaction extends Model
         'cb',
         'description',
         'type',
+    ];
+
+    protected $casts = [
+        'ob' => Round::class,
+        'cb' => Round::class,
+        'amount' => Round::class,
     ];
 
     public function wallet()
